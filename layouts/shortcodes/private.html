@@ -1,4 +1,4 @@
-{{- with $readAllowed := ($.Get "private_allowed") | default ($.Page.Param "private_allowed") }}
+{{- with $readAllowed := (partial "inline/private_allowed" $) }}
   {{- $currentProfiles := (site.Param "currentProfiles" | default slice) | append "_default" }}
   {{- $readDenied := ($.Get "private_denied") | default ($.Page.Param "private_denied") | default slice }}
   {{- if (partial "_access_allowed" (dict "currentProfiles" $currentProfiles "readAllowed" $readAllowed "readDenied" $readDenied)) }}
@@ -7,3 +7,12 @@
 {{- else }}
   {{- errorf "'private_allowed' param required in shortcode, page param (cascade allowed) or site param: %s" $.Position }}
 {{- end -}}
+
+{{ define "partials/inline/private_allowed" }}
+{{ $privateAllowed := $.Get "private_allowed" }}
+{{ if eq "string" (printf "%T" $privateAllowed) }}
+  {{/* For some reason, `unmarshal` returns a two-dimensional array */}}
+  {{ $privateAllowed = index ($privateAllowed | unmarshal) 0 }}
+{{ end }}
+{{ return ($privateAllowed | default ($.Page.Param "private_allowed")) }}
+{{ end }}

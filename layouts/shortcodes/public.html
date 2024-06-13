@@ -1,4 +1,4 @@
-{{- with $readAllowed := ($.Get "private_allowed") | default ($.Page.Param "private_allowed") }}
+{{- with $readAllowed := (partial "inline/private_allowed" $) | default ($.Page.Param "private_allowed") }}
   {{- $currentProfiles := (site.Param "currentProfiles" | default slice) | append "_default" }}
   {{- $readDenied := ($.Get "private_denied") | default ($.Page.Param "private_denied") | default slice }}
   {{- if not (partial "_access_allowed" (dict "currentProfiles" $currentProfiles "readAllowed" $readAllowed "readDenied" $readDenied)) }}
