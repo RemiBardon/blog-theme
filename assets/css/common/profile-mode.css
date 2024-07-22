@@ -21,6 +21,10 @@
   border: 2px solid var(--border);
 }
 
+.profile a {
+  text-decoration: underline;
+}
+
 .buttons {
   flex-wrap: wrap;
   max-width: 400px;
