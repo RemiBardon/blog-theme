@@ -6,7 +6,7 @@
 
 - id: read_time
   translation:
-    one : "1 min"
+    one: "1 min"
     other: "{{ .Count }} min"
 
 - id: datetime
@@ -17,7 +17,7 @@
 
 - id: words
   translation:
-    one : "word"
+    one: "word"
     other: "{{ .Count }} words"
 
 - id: toc
@@ -40,7 +40,7 @@
 
 - id: post_count
   translation:
-    one : "1 post"
+    one: "1 post"
     other: "{{ . }} posts"
 
 - id: not_found
@@ -120,3 +120,8 @@
   translation: Quote
 - id: cite
   translation: Citation
+
+- id: connected
+  translation: Connected
+- id: not_connected
+  translation: Not connected
