@@ -69,7 +69,7 @@
 {{- end }}
 
 {{- /* Author */}}
-{{- with (partialCached "page_author.html" . (.Param "author")) }}
+{{- with (partialCached "page_author.html" . (.Param "author.name")) }}
   {{- $display := "" }}
   {{- if and (eq $.hideAuthorIfNotSpecial true) (ne $.ctx.Params.author site.Params.author) }}
     {{- $display = " hidden" }}
