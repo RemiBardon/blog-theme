@@ -2,7 +2,7 @@
 
 <h1 class="post-title">
   <span{{ with $.itemprop }} itemprop="{{ . }}"{{ end }}>{{ .Title | markdownify }}</span>
-  {{ if .Draft }}<sup class="entry-isdraft">[draft]</sup>{{ end }}
+  {{ if .Draft }}<sup class="entry-sup">[draft]</sup>{{ end }}
 </h1>
 
 {{- end }}{{/* End context */ -}}

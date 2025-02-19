@@ -78,6 +78,12 @@
   {{- $scratch.Add "meta" (slice (printf "<li%s>%s</li>" $display .)) }}
 {{- end }}
 
+{{- /* Language */}}
+{{- if eq $.showLang true }}
+  {{- $text := .Language.LanguageName }}
+  {{- $scratch.Add "meta" (slice (printf "<li>%s</li>" $text)) }}
+{{- end }}
+
 {{- with ($scratch.Get "meta") }}
 <ul class="post-metadata list dot-separated">
   {{ range . -}}
