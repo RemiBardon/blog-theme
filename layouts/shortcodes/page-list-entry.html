@@ -9,7 +9,16 @@
   {{- errorf "At least one param should be provided (a page path): %s" $.Position }}
 {{- end }}
 
-{{- with site.GetPage $path }}
+{{- $site := site }}
+{{- with $lang := .Get 1 }}
+  {{- with where site.Sites "Language.Lang" "eq" $lang }}
+    {{- $site = index . 0 }}
+  {{- else }}
+    {{- errorf "Language '%s' does not exist: %s" $lang $.Position }}
+  {{- end }}
+{{- end }}
+
+{{- with $site.GetPage $path }}
   {{- partial "page_list_entry.html" . }}
 {{- else }}
   {{- errorf "Page '%s' does not exist: %s" $path $.Position }}
