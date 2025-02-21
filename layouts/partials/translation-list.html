@@ -1,0 +1,19 @@
+{{- if .IsTranslated }}
+  {{- partial "util/i18n.txt" "translations" }}:
+  {{- $pageLang := .Page.Lang }}
+<ul class="i18n-list">
+  {{- range .Page.AllTranslations }}
+    {{- if ne $pageLang .Lang }}
+  <li>
+    <a href="{{ .Permalink }}">
+      {{- if (and site.Params.displayFullLangName (.Language.LanguageName)) }}
+        {{- .Language.LanguageName | emojify }}
+      {{- else }}
+        {{- .Lang | title }}
+      {{- end }}
+    </a>
+  </li>
+    {{- end }}
+  {{- end }}
+</ul>
+{{- end -}}

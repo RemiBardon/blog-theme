@@ -1,0 +1,11 @@
+{{- if .Param "editPost.URL" }}
+  {{- $fileUrlPath := path.Join .File.Path }}
+  {{- $appendFilePath := .Param "editPost.appendFilePath" | default false }}
+<a
+  href="{{ .Param `editPost.URL` }}{{ if $appendFilePath }}/{{ $fileUrlPath }}{{ end }}"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  {{ .Param "editPost.Text" | default (partial "util/i18n.txt" "edit_post") }}
+</a>
+{{- end -}}

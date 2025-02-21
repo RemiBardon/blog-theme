@@ -1,40 +1,46 @@
 .category-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: var(--gap);
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--gap);
 }
 
 @media screen and (min-width: 768px) {
-    .category-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .category-grid li {
-    list-style: none;
+  list-style: none;
 }
 
 .category-card {
-    position: relative;
-    border-radius: var(--radius);
-    padding: var(--gap);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    column-gap: 1rem;
+  position: relative;
+  border-radius: var(--radius);
+  padding: var(--gap);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 1rem;
+  row-gap: 0.25em;
+}
+
+.category-card .category-icon {
+  width: 3em;
+  height: 3em;
 }
 
 .category-card .title {
-    /* Use 1.5em on wide screens. Limit to 7vw on small screens. Don't go under 1em. */
-    font-size: max(1em, min(7vw, 1.5em));
-    font-weight: 600;
+  /* Use 1.5em on wide screens. Limit to 7vw on small screens. Don't go under 1em. */
+  font-size: max(1em, min(7vw, 1.5em));
+  font-weight: 600;
 }
 
 .category-card .subtitle {
-    font-size: 0.8em;
-    color: var(--secondary);
+  font-size: 0.8em;
+  color: var(--secondary);
 }
 
 .category-card:hover .title {
-    text-decoration: underline;
+  text-decoration: underline;
 }

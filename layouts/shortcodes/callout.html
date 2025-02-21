@@ -41,28 +41,33 @@
   {{- end }}
 {{- end }}
 
-
 <details
   class="callout"
   data-callout="{{ $type }}"
   {{ with $fold }}
-    {{- if eq $fold "+" -}}
+    {{- if eq $fold `+` -}}
       open
-    {{- else if eq $fold "-" }}
+    {{- else if eq $fold `-` }}
       {{- /* Default behavior of HTML details tag */}}
     {{- else }}
       {{- errorf "Callout fold '%s' not supported: %s" $fold $.Position }}
     {{- end }}
-  {{ else -}}
+  {{- else -}}
     open disabled
   {{- end }}
->{{ "" -}}
+>
   <summary>
     {{- $icon | safeHTML -}}
     <span>{{ $summary | markdownify }}</span>
-    {{- if $fold -}}
-      <svg xmlns="http://www.w3.org/2000/svg" class="chevron" width="0.75em" height="1.3em" viewBox="0 0 10 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 6 6 6-6 6"/></svg>
-    {{- end -}}
+    {{- if $fold }}
+    <svg xmlns="http://www.w3.org/2000/svg"
+      class="chevron"
+      width="0.75em" height="1.3em" viewBox="0 0 10 24"
+      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+    >
+      <path d="m2 6 6 6-6 6"/>
+    </svg>
+    {{- end }}
   </summary>
   {{- with $content := $.InnerDeindent }}
     {{- $content | $.Page.RenderString (dict "display" "block") }}
@@ -107,5 +112,5 @@
 
 {{- define "partials/callout-default-summary.txt" }}
 {{ $type := . }}
-{{ return partialCached "i18n.txt" $type $type site.Language.LanguageCode }}
+{{ return partial "util/i18n.txt" $type }}
 {{- end -}}

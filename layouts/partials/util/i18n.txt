@@ -1,0 +1,23 @@
+{{ return (partialCached "inline/_i18n.txt" $ $ site.Language.LanguageCode) }}
+
+{{- define "partials/inline/_i18n.txt" }}
+  {{ $res := $ }}
+
+  {{ if eq "string" (printf "%T" $) }}
+    {{ with i18n $ }}
+      {{ $res = . }}
+    {{ else }}
+      {{ errorf "i18n key '%s' not defined for '%s'" $ site.Language.LanguageCode }}
+    {{ end }}
+  {{ else if eq "map[string]interface {}" (printf "%T" $) }}
+    {{ with i18n $.key $.value }}
+      {{ $res = . }}
+    {{ else }}
+      {{ errorf "i18n key '%s' not defined for '%s'" $.key site.Language.LanguageCode }}
+    {{ end }}
+  {{ else }}
+    {{ errorf "Partial 'i18n.txt' expects a string or a dict (got %s)" (printf "%T" $) }}
+  {{ end }}
+
+  {{ return $res }}
+{{- end }}

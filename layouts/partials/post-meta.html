@@ -1,0 +1,12 @@
+{{- if not (.Param "hideMeta") -}}
+  {{ partial "inline/_post-meta.html" . }}
+{{- end }}
+
+{{- define "partials/inline/_post-meta.html" }}
+<div class="post-meta">
+  {{ partial "post-metadata.html" (dict "ctx" .) }}
+  {{ partial "translation-list.html" . }}
+  {{ partial "edit-post.html" . }}
+  {{ partial "post-canonical.html" . }}
+</div>
+{{- end -}}

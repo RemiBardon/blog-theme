@@ -1,0 +1,20 @@
+{{- with $imgSrc := site.Params.label.icon }}
+  {{- with $img := resources.Get site.Params.label.icon }}
+    {{- $processableFormats := slice "bmp" "gif" "jpeg" "jpg" "png" "tif" "tiff" "webp" }}
+    {{- if in $processableFormats $img.MediaType.SubType }}
+      {{- if site.Params.label.iconHeight }}
+        {{- $img = $img.Resize (printf "x%d" site.Params.label.iconHeight) }}
+      {{- else }}
+        {{- $img = $img.Resize "x30" }}
+      {{- end }}
+    {{- end }}
+    {{- $imgSrc = $img.Permalink }}
+  {{- else }}
+    {{- $imgSrc = absURL $imgSrc }}
+  {{- end -}}
+<img
+  class="site-icon" src="{{ $imgSrc }}"
+  alt="Site logo" aria-label="Site logo"
+  height="{{ site.Params.label.iconHeight | default `30` }}"
+>
+{{- end -}}

@@ -1,0 +1,13 @@
+#theme-toggle {
+  width: 1em;
+  height: 1em;
+  font-weight: 700;
+}
+
+body.dark #theme-toggle #moon {
+  display: none;
+}
+
+body:not(.dark) #theme-toggle #sun {
+  display: none;
+}

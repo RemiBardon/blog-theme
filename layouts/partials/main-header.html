@@ -1,0 +1,31 @@
+{{ partialCached "theme-toggle/theme-toggle-script.html" . site.Params.disableThemeToggle site.Params.defaultTheme }}
+<header class="main-header">
+  <nav class="leading">
+    {{- $siteTitle := (site.Params.label.text | default site.Title) }}
+    {{- if $siteTitle }}
+    <a class="site-title" href="{{ `/` | absLangURL }}" accesskey="h" title="{{ $siteTitle }}">
+      {{- partialCached "main-header/site-icon.html" nil }}
+      {{- $siteTitle -}}
+    </a>
+    {{- end }}
+    {{ partialCached "theme-toggle/theme-toggle-button.html" . site.Params.disableThemeToggle site.Params.defaultTheme }}
+    {{ partialCached "lang-switch/lang-switch.html" .Page.Translations .Permalink .Page.Translations }}
+  </nav>
+  <nav>
+    <ul class="trailing" itemscope itemtype="https://schema.org/SiteNavigationElement">
+      {{- range site.Menus.header }}
+      <li>
+        <a
+          href="{{ .URL | absLangURL }}"
+          title="{{ .Title | default .Name }}"
+          {{ if $.IsMenuCurrent .Menu . }}class="active"{{ end }}
+          itemprop="url"
+        >
+          <span itemprop="name">{{ .Pre }}{{ .Name }}{{ .Post }}</span>
+        </a>
+      </li>
+      {{- end }}
+    </ul>
+  </nav>
+</header>
+{{ partial "main-header/after.html" . }}

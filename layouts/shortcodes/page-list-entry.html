@@ -19,7 +19,7 @@
 {{- end }}
 
 {{- with $site.GetPage $path }}
-  {{- partial "page_list_entry.html" . }}
+  {{- partial "page-list-entry.html" . }}
 {{- else }}
   {{- errorf "Page '%s' does not exist: %s" $path $.Position }}
-{{- end }}
+{{- end -}}

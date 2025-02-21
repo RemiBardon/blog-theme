@@ -1,9 +1,8 @@
-{{- if .Get "summary" }}
-{{- else }}
+{{- if not (.Get "summary") }}
   {{- warnf "missing value for param 'summary': %s" .Position }}
 {{- end }}
 
-<details class="collapse" {{ if (eq (.Get "openByDefault") true) }} open=true {{ end }}>
+<details class="collapse" {{ if (eq (.Get `openByDefault`) true) }}open="true"{{ end }}>
   <summary markdown="span">{{ .Get "summary" | markdownify }}</summary>
   {{ .Inner | markdownify }}
 </details>

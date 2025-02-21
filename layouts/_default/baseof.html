@@ -1,27 +1,21 @@
 <!DOCTYPE html>
 <html lang="{{ site.Language }}" dir="{{ .Language.LanguageDirection | default "auto" }}">
-  <head>
-    {{ partial "head.html" . }}
-  </head>
-
-  <body class="
-  {{- if (or (ne .Kind `page` ) (eq .Layout `archives`) (eq .Layout `search`)) -}}
-    {{- print "list" }}
-  {{- end }}
-  {{- printf " page-type-%s" .Type }}
-  {{- if eq site.Params.defaultTheme `dark` }}
-  {{- print " dark" }}
-  {{- end -}}
-  " id="top">
-    {{ partialCached "header.html" . .Page -}}
-    {{- if not (in ((.Param "read_allowed") | default (slice "_default")) "_default") }}
-    <div class="private-page-warning">
-      <span>{{ i18n "private_page_warning" | default "This page is private." }}</span>
-    </div>
-    {{- end }}
+  <head>{{ partial "head.html" . }}</head>
+  <body id="top" class="
+  {{ if (or (ne .Kind `page`) (eq .Layout `archives`) (eq .Layout `search`)) -}}list{{ end }}
+  {{ printf ` page-type-%s` .Type }}
+  {{ if eq site.Params.defaultTheme `dark` }}dark{{ end -}}
+  ">
+    {{ partialCached "main-header.html" . .Page }}
     <main class="main">
       {{ block "main" . }}{{ end }}
     </main>
-    {{ partialCached "footer.html" . .Layout .Kind (.Param "hideFooter") (.Param "ShowCodeCopyButtons") -}}
+    {{ partialCached "main-footer.html" . (.Param "hideFooter") }}
+    {{ partialCached "misc/scroll-to-top-button.html" nil }}
+
+    {{- /* Footer scripts */}}
+    {{ partialCached "misc/code-block-copy-script.html" . .Layout .Kind (.Param "showCodeCopyButtons") }}
+    {{ partialCached "theme-toggle/theme-toggle-footer-script.html" . site.Params.disableThemeToggle site.Params.assets.theme_color }}
+    {{ partialCached "misc/scroll-to-top-script.html" nil }}
   </body>
 </html>

@@ -1,0 +1,19 @@
+{{- with $translations := . }}{{/* Expects `.Page.Translations` */}}
+<ul class="lang-switch">
+  {{- range $translations }}
+  <li>
+    <a
+      href="{{ .Permalink }}"
+      title="{{ .Language.Params.languageAltTitle | default (.Language.LanguageName | emojify) | default (.Lang | title) }}"
+      aria-label="{{ .Language.LanguageName | default (.Lang | title) }}"
+    >
+      {{- if (and site.Params.displayFullLangName .Language.LanguageName) }}
+        {{- .Language.LanguageName | emojify }}
+      {{- else }}
+        {{- .Lang | title }}
+      {{- end }}
+    </a>
+  </li>
+  {{- end }}
+</ul>
+{{- end -}}

@@ -1,0 +1,31 @@
+{{- if (not site.Params.disableThemeToggle) }}{{/* Theme toggle is enabled */}}
+  {{- if (eq site.Params.defaultTheme "light") }}{{/* Theme is light */}}
+<script>
+  if (localStorage.getItem("pref-theme") === "dark") {
+    document.body.classList.add('dark');
+  }
+</script>
+  {{- else if (eq site.Params.defaultTheme "dark") }}{{/* Theme is dark */}}
+<script>
+  if (localStorage.getItem("pref-theme") === "light") {
+    document.body.classList.remove('dark');
+  }
+</script>
+  {{- else }}{{/* Theme is auto */}}
+<script>
+  if (localStorage.getItem("pref-theme") === "dark") {
+    document.body.classList.add('dark');
+  } else if (localStorage.getItem("pref-theme") === "light") {
+    document.body.classList.remove('dark');
+  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add('dark');
+  }
+</script>
+  {{- end }}
+{{- else if not (in (slice "light" "dark") site.Params.defaultTheme) }}{{/* Theme toggle is disabled and theme is auto */}}
+<script>
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add('dark');
+  }
+</script>
+{{- end }}

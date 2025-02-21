@@ -1,0 +1,14 @@
+{{ if (not site.Params.disableScrollToTop) -}}
+<script>
+  var button = document.getElementById("top-link");
+  window.onscroll = function () {
+    if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+      button.style.visibility = "visible";
+      button.style.opacity = "1";
+    } else {
+      button.style.visibility = "hidden";
+      button.style.opacity = "0";
+    }
+  };
+</script>
+{{- end -}}

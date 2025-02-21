@@ -1,0 +1,99 @@
+{{ with .ctx }}{{/* Apply proper context from dict */ -}}
+
+{{- $scratch := newScratch }}
+{{- $dateFormat := (.Param "DateFormat") | default ":date_long" }}
+{{- $timeFormat := (.Param "TimeFormat") | default ":time_short" }}
+{{- $publishDateIsStartOfDay := eq (.PublishDate | time.Format "15:04") "00:00" }}
+
+{{- /* Publish date */}}
+{{- if not .PublishDate.IsZero }}
+  {{- $date := (.PublishDate | time.Format $dateFormat) }}
+  {{- $text := $date }}
+  {{- /* Add time component if not 00:00 */}}
+  {{- if not $publishDateIsStartOfDay }}
+    {{- $time := (.PublishDate | time.Format $timeFormat) }}
+    {{- $text = partial "util/i18n.txt" (dict "key" "datetime" "value" (dict "date" $date "time" $time)) }}
+  {{- end }}
+  {{- /* Value comes from <https://pkg.go.dev/time#pkg-constants> */}}
+  {{- $value := (.PublishDate | time.Format "2006-01-02T15:04:05Z07:00") }}
+  {{- $scratch.Add "meta" (slice (printf "<li><time itemprop=\"datePublished\" datetime=\"%s\">%s</time></li>" $value $text)) }}
+{{- end }}
+
+{{- /* Last modification */}}
+{{- if (.Param "ShowLastMod") }}
+  {{- $lastmodIsStartOfDay := partialCached "is-start-of-day" .Lastmod .Lastmod }}
+  {{- if (or (and $publishDateIsStartOfDay (gt .Lastmod (.PublishDate.AddDate 0 0 1))) (and (not $publishDateIsStartOfDay) (gt .Lastmod .PublishDate))) }}
+    {{- $date := (.Lastmod | time.Format $dateFormat) }}
+    {{- $datetime := $date }}
+    {{- /* Add time component if not 00:00 */}}
+    {{- if not $lastmodIsStartOfDay }}
+      {{- $time := (.Lastmod | time.Format $timeFormat) }}
+      {{- $datetime = partial "util/i18n.txt" (dict "key" "datetime" "value" (dict "date" $date "time" $time)) }}
+    {{- end }}
+    {{- $text := partial "util/i18n.txt" (dict "key" "last_mod" "value" $datetime) }}
+    {{- /* Value comes from <https://pkg.go.dev/time#pkg-constants> */}}
+    {{- $value := (.Lastmod | time.Format "2006-01-02T15:04:05Z07:00") }}
+
+    {{- $display := "" }}
+    {{- if eq $.hideLastMod true }}
+      {{- $display = " hidden" }}
+    {{- end }}
+
+    {{- $scratch.Add "meta" (slice (printf "<li%s><time itemprop=\"dateModified\" datetime=\"%s\">%s</time></li>" $display $value $text)) }}
+  {{- end }}
+{{- end }}
+
+{{- if .IsPage }}
+  {{- /* Reading time */}}
+  {{- if (.Param "ShowReadingTime") }}
+    {{- $text := partial "util/i18n.txt" (dict "key" "read_time" "value" .ReadingTime) }}
+    {{- $value := (printf "PT%dM" .ReadingTime) }}
+    {{- $scratch.Add "meta" (slice (printf "<li><time itemprop=\"timeRequired\" datetime=\"%s\">%s</time></li>" $value $text)) }}
+  {{- end }}
+
+  {{- /* Word count */}}
+  {{- if (not hugo.IsProduction) | or (.Param "ShowWordCount") }}
+    {{- $text := partial "util/i18n.txt" (dict "key" "words" "value" .WordCount) }}
+    {{- $value := .WordCount }}
+    {{- $scratch.Add "meta" (slice (printf "<li><span itemprop=\"wordCount\" content=\"%d\">%s</span></li>" $value $text)) }}
+  {{- end }}
+{{- else }}
+  {{- /* Pages count */}}
+  {{- $allPages := slice }}
+  {{- range .Page.AllTranslations }}
+    {{- $allPages = $allPages | append (partial "util/page-filter" .RegularPagesRecursive) }}
+  {{- end }}
+  {{- $pageCount := len $allPages }}
+  {{- $text := partial "util/i18n.txt" (dict "key" "post_count" "value" $pageCount) }}
+  {{- $scratch.Add "meta" (slice (printf "<li>%s</li>" $text)) }}
+{{- end }}
+
+{{- /* Author */}}
+{{- with (partialCached "page-author.html" . (.Param "author.name")) }}
+  {{- $display := "" }}
+  {{- if and (eq $.hideAuthorIfNotSpecial true) (ne $.ctx.Params.author site.Params.author) }}
+    {{- $display = " hidden" }}
+  {{- end }}
+
+  {{- $scratch.Add "meta" (slice (printf "<li%s>%s</li>" $display .)) }}
+{{- end }}
+
+{{- /* Language */}}
+{{- if eq $.showLang true }}
+  {{- $text := .Language.LanguageName }}
+  {{- $scratch.Add "meta" (slice (printf "<li>%s</li>" $text)) }}
+{{- end }}
+
+{{- with ($scratch.Get "meta") }}
+<ul class="post-metadata list dot-separated">
+  {{ range . -}}
+    {{ . | safeHTML }}
+  {{- end }}
+</ul>
+{{- end }}
+
+{{- end }}{{/* End context */ -}}
+
+{{ define "partials/is-start-of-day" }}
+{{- return eq (. | time.Format "15:04") "00:00" }}
+{{ end }}

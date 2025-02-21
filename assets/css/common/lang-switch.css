@@ -1,0 +1,12 @@
+.lang-switch {
+  display: flex;
+  flex-wrap: inherit;
+}
+
+.lang-switch li {
+  list-style: none;
+}
+.lang-switch li:not([hidden]) ~ li::before {
+  content: "|";
+  margin: auto 0.25em;
+}

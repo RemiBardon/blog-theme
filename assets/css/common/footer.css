@@ -50,13 +50,3 @@
 #theme-toggle:focus {
     outline: 0;
 }
-
-#connection-status {
-    margin-bottom: 0.5em;
-}
-
-#connection-status > svg {
-    fill: currentColor;
-    width: 0.8em;
-    height: 0.8em;
-}

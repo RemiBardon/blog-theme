@@ -4,13 +4,13 @@
 <header class="page-header">
   {{ partial "breadcrumb.html" . }}
   <h1>{{ .Title | markdownify }}</h1>
-  {{ partial "post_description.html" . }}
+  {{ partial "post-description.html" . }}
 </header>
 {{- end }}
 
 <ul class="terms">
   {{- $type := .Type }}
-  {{- range $key, $value := (partial "profile_filter.html" .Data.Terms.Alphabetical) }}
+  {{- range $key, $value := (partial "util/page-filter" .Data.Terms.Alphabetical) }}
     {{- $count := .Count }}
     {{- with site.GetPage (printf "/%s/%s" $type .Name) }}
   <li>

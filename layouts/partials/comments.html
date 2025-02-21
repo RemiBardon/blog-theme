@@ -1,3 +1,10 @@
 {{ if (.Param "comments") -}}
   {{ partial "_comments.html" . }}
 {{- end -}}
+
+{{- /* NOTE: Not prefixed by `inline` to allow straightforward extension. */}}
+{{- define "partials/_comments.html" }}
+  {{- /* Comments area start */}}
+  {{- /* To add comments read => <https://gohugo.io/content-management/comments/> */}}
+  {{- /* Comments area end */}}
+{{- end }}

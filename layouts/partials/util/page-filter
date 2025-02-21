@@ -1,0 +1,4 @@
+{{- /* Made to be extended. */}}
+{{- /* Will be used to filter all page lists. */}}
+
+{{ return . }}
