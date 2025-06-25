@@ -22,7 +22,7 @@
   {{- $meta = $meta | append (printf `<time datetime=%q>%s</time>` . (. | time.Format ":date_long")) }}
 {{- end }}
 
-{{- if not hugo.IsProduction }}
+{{- if eq hugo.Environment "development" }}
   {{- with $assetId := .assetId }}
     {{- $meta = $meta | append (printf `<span style="color: var(--secondary);">%s</span>` $assetId) }}
   {{- end }}
