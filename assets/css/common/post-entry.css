@@ -16,9 +16,19 @@
 .page-list-entry:active {
   transform: scale(0.96);
 }
+.page-list-entry:has(.term:active):active {
+  transform: none;
+
+  .term:active {
+    transform: scale(0.96);
+  }
+}
 
 .page-list-entry:hover header {
   text-decoration: underline;
+}
+.page-list-entry:has(.term:hover) header {
+  text-decoration: none;
 }
 
 .page-list-entry.foreign .entry-header,
@@ -121,6 +131,7 @@
   right: 0;
   top: 0;
   bottom: 0;
+  z-index: 1;
 }
 
 .entry-cover,
@@ -144,4 +155,16 @@
 .entry-cover a {
   color: var(--secondary);
   box-shadow: 0 1px 0 var(--primary);
+}
+
+.page-list-entry .entry-footer .terms {
+  margin-top: calc(var(--content-gap) / 2);
+}
+.page-list-entry .entry-footer .terms .term {
+  background: var(--tertiary);
+}
+.page-list-entry:not(:active) .entry-footer .terms .term,
+.page-list-entry:active .entry-footer .terms .term:active {
+  position: relative;
+  z-index: 2;
 }
