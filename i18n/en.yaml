@@ -125,3 +125,8 @@
   translation: Connected
 - id: not_connected
   translation: Not connected
+
+- id: by_category
+  translation: By category
+- id: recently_published
+  translation: Recently published

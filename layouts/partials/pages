@@ -1,15 +1,31 @@
+{{- $page := $ }}
+{{- $recursive := false }}
+{{- if eq "map[string]interface {}" (printf "%T" $) }}
+  {{- with $.page }}
+    {{- $page = . }}
+  {{- else }}
+    {{- errorf "The 'pages' partial requires a 'page' argument when passed a dict." }}
+  {{- end }}
+  {{- $recursive = $.recursive | default $recursive }}
+{{- end }}
+
 {{- $pages := slice }}
 {{- $translationKeys := slice }}
 {{- /* `.AllTranslations` gives translations sorted by weight, we want the current language first */}}
-{{- $allTranslations := slice .Page }}
-{{- $allTranslations = $allTranslations | append .Page.Translations }}
+{{- $allTranslations := slice $page.Page }}
+{{- $allTranslations = $allTranslations | append $page.Page.Translations }}
 {{- range $allTranslations }}
-  {{- $newPages := partial "util/page-filter" .Pages }}
-  {{- range $page := $newPages }}
-    {{- if not (in $translationKeys $page.TranslationKey) }}
-      {{- $pages = $pages | append $page }}
-      {{- $translationKeys = $translationKeys | append $page.TranslationKey }}
+  {{- $newPages := slice }}
+  {{- if $recursive }}
+    {{- $newPages = partial "util/page-filter" $page.RegularPagesRecursive }}
+  {{- else }}
+    {{- $newPages = partial "util/page-filter" $page.Pages }}
+  {{- end }}
+  {{- range $newPage := $newPages }}
+    {{- if not (in $translationKeys $newPage.TranslationKey) }}
+      {{- $pages = $pages | append $newPage }}
+      {{- $translationKeys = $translationKeys | append $newPage.TranslationKey }}
     {{- end }}
   {{- end }}
 {{- end }}
-{{- return (.Paginate $pages).Pages.ByPublishDate.Reverse }}
+{{- return ($page.Paginate $pages).Pages.ByPublishDate.Reverse }}
