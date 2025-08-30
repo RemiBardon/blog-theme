@@ -161,6 +161,7 @@
   margin-top: calc(var(--content-gap) / 2);
 }
 .page-list-entry .entry-footer .terms .term {
+  font-size: smaller;
   background: var(--tertiary);
 }
 .page-list-entry:not(:active) .entry-footer .terms .term,
