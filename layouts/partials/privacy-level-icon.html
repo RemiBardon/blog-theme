@@ -1,0 +1,33 @@
+{{- $ctx := $ }}
+{{- $style := "icon" }}
+{{- if eq "map[string]interface {}" (printf "%T" $) }}
+  {{- $ctx = .ctx }}
+  {{- $style = .style | default $style }}
+{{- end -}}
+
+{{ with $ctx }}{{/* Apply proper context from dict */ -}}
+
+{{- $icon := "" }}
+{{- $text := "" }}
+
+{{- $readAllowed := .Page.Params.read_allowed | default (slice "_default") }}
+{{- if not (in $readAllowed "_default") }}
+  {{- $icon = "privacy" }}
+  {{- $text = partial "util/i18n.txt" "privacy_level_private" }}
+{{- else if (or (.HasShortcode "private") (.HasShortcode "sensitive")) }}
+  {{- $icon = "show-password" }}
+  {{- $text = partial "util/i18n.txt" "privacy_level_redacted" }}
+{{- end }}
+
+{{- if $text }}
+<span class="privacy-level-icon">
+  {{- if eq $style "iconAndText" -}}
+    <i>{{ partial "svg.html" $icon }}</i>
+    <span>{{ $text }}</span>
+  {{- else -}}
+    <i title="{{ $text }}">{{ partial "svg.html" $icon }}</i>
+  {{- end }}
+</span>
+{{- end }}
+
+{{- end }}{{/* End context */ -}}

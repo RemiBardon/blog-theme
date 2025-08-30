@@ -84,6 +84,15 @@
   {{- $scratch.Add "meta" (slice (printf "<li>%s</li>" $text)) }}
 {{- end }}
 
+{{- /* Privacy level */}}
+{{- if eq $.showPrivacyLevel true }}
+  {{- $ctx := dict "ctx" . "style" "iconAndText" }}
+  {{- $text := partial "privacy-level-icon.html" $ctx }}
+  {{- with $text := ($text | strings.TrimSpace) }}
+    {{- $scratch.Add "meta" (slice (printf "<li>%s</li>" $text)) }}
+  {{- end }}
+{{- end }}
+
 {{- with ($scratch.Get "meta") }}
 <ul class="post-metadata list dot-separated">
   {{ range . -}}

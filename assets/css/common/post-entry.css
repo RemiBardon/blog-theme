@@ -17,7 +17,8 @@
 .page-list-entry:active {
   transform: scale(0.96);
 }
-.page-list-entry:has(.term:active):active {
+.page-list-entry:has(.term:active):active,
+.page-list-entry:has(*[title]:active):active {
   transform: none;
 
   .term:active {
@@ -25,10 +26,11 @@
   }
 }
 
-.page-list-entry:hover header {
+.page-list-entry:hover header .title {
   text-decoration: underline;
 }
-.page-list-entry:has(.term:hover) header {
+.page-list-entry:has(.term:hover) header .title,
+.page-list-entry:has(*[title]:hover) header .title {
   text-decoration: none;
 }
 
@@ -106,10 +108,25 @@
 }
 
 .entry-header h2 {
-  font-size: 1.25em !important;
-  line-height: 1.3 !important;
-  font-weight: 700 !important;
-  margin-top: 0 !important;
+  font-size: 1.25em;
+  font-weight: 700;
+}
+
+.privacy-level-icon {
+  display: inline-block;
+}
+.privacy-level-icon i {
+  font-size: 0.875em;
+  vertical-align: middle;
+}
+.entry-header .privacy-level-icon {
+  margin-inline-start: 0.125em;
+  color: var(--secondary);
+}
+.entry-header i[title] {
+  position: relative;
+  z-index: 3;
+  cursor: context-menu;
 }
 
 .entry-content {
@@ -133,7 +150,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 .entry-cover,
@@ -165,9 +182,10 @@
 .page-list-entry .entry-footer .terms .term {
   font-size: smaller;
   background: var(--tertiary);
-}
-.page-list-entry:not(:active) .entry-footer .terms .term,
-.page-list-entry:active .entry-footer .terms .term:active {
   position: relative;
-  z-index: 2;
+  z-index: 3;
+}
+
+.page-list-entry:not(:has(.term:active)):active .entry-footer .terms .term {
+  z-index: 1;
 }

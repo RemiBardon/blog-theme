@@ -56,6 +56,10 @@
   translation: >
     Cette page est privée.
     Il ne sert à rien de partager un lien vers cette page car la plupart des gens n’y ont pas accès.
+- id: privacy_level_private
+  translation: Cette page n’est pas publique
+- id: privacy_level_redacted
+  translation: Cette page a du contenu non public
 
 - id: created_with
   translation: Créé avec

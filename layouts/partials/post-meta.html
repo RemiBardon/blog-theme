@@ -4,7 +4,7 @@
 
 {{- define "partials/inline/_post-meta.html" }}
 <div class="post-meta">
-  {{ partial "post-metadata.html" (dict "ctx" .) }}
+  {{ partial "post-metadata.html" (dict "ctx" . "showPrivacyLevel" true) }}
   {{ partial "translation-list.html" . }}
   {{ partial "edit-post.html" . }}
   {{ partial "post-canonical.html" . }}
