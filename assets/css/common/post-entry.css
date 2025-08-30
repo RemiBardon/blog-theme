@@ -1,4 +1,5 @@
 .home-info .entry-content {
+  line-clamp: unset;
   -webkit-line-clamp: unset;
 }
 
@@ -117,6 +118,7 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  line-clamp: 10;
   -webkit-line-clamp: 10;
 }
 
