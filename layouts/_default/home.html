@@ -5,17 +5,17 @@
 
 {{ partialCached "category-grid.html" . }}
 
-<div class="home-section">
-  <h2>{{ partial "util/i18n.txt" "recently_published" }}</h2>
-  <ol class="page-list">
-    {{- $ctx := dict
-      "page" .
-      "recursive" true
-    }}
-    {{- $paginator := .Paginate (partialCached "pages" $ctx $ctx) }}
-    {{- range (where (where $paginator.Pages.ByPublishDate.Reverse "Params.draft" "ne" true) "Params.publishDate" "gt" (now.AddDate 0 -3 0)).Limit 5 -}}
-      {{- partial "page-list-entry.html" . -}}
-    {{- end -}}
-  </ol>
-</div>
+{{- $ctx := dict "page" . "recursive" true }}
+{{- $paginator := .Paginate (partialCached "pages" $ctx $ctx) }}
+{{- $recentlyPublished := where (where $paginator.Pages.ByPublishDate.Reverse "Params.draft" "ne" true) "Params.publishDate" "gt" (now.AddDate 0 -3 0) }}
+{{- if gt $recentlyPublished.Len 0 }}
+  <div class="home-section">
+    <h2>{{ partial "util/i18n.txt" "recently_published" }}</h2>
+    <ol class="page-list">
+      {{- range $recentlyPublished.Limit 5 -}}
+        {{- partial "page-list-entry.html" . -}}
+      {{- end -}}
+    </ol>
+  </div>
+{{- end }}
 {{- end }}{{/* end main */ -}}
