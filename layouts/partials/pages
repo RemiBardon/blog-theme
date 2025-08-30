@@ -1,7 +1,7 @@
 {{- $page := $ }}
 {{- $recursive := false }}
 {{- if eq "map[string]interface {}" (printf "%T" $) }}
-  {{- with $.page }}
+  {{- with $.ctx }}
     {{- $page = . }}
   {{- else }}
     {{- errorf "The 'pages' partial requires a 'page' argument when passed a dict." }}

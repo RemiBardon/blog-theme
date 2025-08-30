@@ -5,7 +5,7 @@
 
 {{ partialCached "category-grid.html" . }}
 
-{{- $ctx := dict "page" . "recursive" true }}
+{{- $ctx := dict "ctx" . "recursive" true }}
 {{- $paginator := .Paginate (partialCached "pages" $ctx $ctx) }}
 {{- $recentlyPublished := where (where $paginator.Pages.ByPublishDate.Reverse "Params.draft" "ne" true) "Params.publishDate" "gt" (now.AddDate 0 -3 0) }}
 {{- if gt $recentlyPublished.Len 0 }}
