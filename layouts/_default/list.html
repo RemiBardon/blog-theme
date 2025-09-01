@@ -13,21 +13,23 @@
 {{- if not ($.Param "hideChildPages" | default false) }}
   {{- $pages := partialCached "pages" . . }}
 
-  {{- $onTop := where $pages "Params.keepOnTop" true }}
-  {{- with $onTop }}
-  <ol class="page-list">
-    {{- range . }}
-      {{- partial "page-list-entry.html" . }}
+  {{- if ne .Params.noPins true }}
+    {{- $onTop := where $pages "Params.keepOnTop" true }}
+    {{- with $onTop }}
+    <ol class="page-list">
+      {{- range . }}
+        {{- partial "page-list-entry.html" . }}
+      {{- end }}
+    </ol>
     {{- end }}
-  </ol>
+    {{- $pages = $pages | complement $onTop }}
   {{- end }}
 
-  {{- $rest := where $pages "Params.keepOnTop" "ne" true }}
   {{- /* NOTE: Use `site.Home.Paginator` because `.Paginator` would trigger
            [the pagination cache](https://gohugo.io/templates/pagination/#caching),
-           breaking the filter on `$rest` as a side effect. */}}
+           breaking the filter on `$pages` as a side effect. */}}
   {{- $pagerSize := .Params.pagination.pagerSize | default site.Home.Paginator.PagerSize }}
-  {{- $paginator := .Paginate $rest $pagerSize }}
+  {{- $paginator := .Paginate $pages $pagerSize }}
   {{- with $paginator.Pages }}
   <ol class="page-list">
     {{- range . }}
