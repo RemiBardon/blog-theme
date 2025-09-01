@@ -13,12 +13,19 @@
 
 {{- with $page }}{{/* Apply proper context */ -}}
 
-{{- $pages := slice }}
+{{- $pages := -1 }}
+{{- if $recursive }}
+  {{- $pages = partial "util/page-filter" .RegularPagesRecursive }}
+{{- else }}
+  {{- $pages = partial "util/page-filter" .Pages }}
+{{- end }}
+
 {{- $translationKeys := slice }}
-{{- /* `.AllTranslations` gives translations sorted by weight, we want the current language first */}}
-{{- $allTranslations := slice .Page }}
-{{- $allTranslations = $allTranslations | append .Page.Translations }}
-{{- range $allTranslations }}
+{{- range $pages }}
+  {{- $translationKeys = $translationKeys | append .TranslationKey }}
+{{- end }}
+
+{{- range .Translations }}
   {{- $newPages := slice }}
   {{- if $recursive }}
     {{- $newPages = partial "util/page-filter" .RegularPagesRecursive }}
@@ -32,7 +39,7 @@
     {{- end }}
   {{- end }}
 {{- end }}
-{{- $res = (.Paginate $pages).Pages.ByPublishDate.Reverse }}
+{{- $res = $pages.ByPublishDate.Reverse }}
 
 {{- end }}{{/* End context */ -}}
 
