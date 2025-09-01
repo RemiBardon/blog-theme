@@ -39,7 +39,15 @@
     {{- end }}
   {{- end }}
 {{- end }}
-{{- $res = $pages.ByPublishDate.Reverse }}
+
+{{- $pages = $pages.ByPublishDate }}
+
+{{- /* Sort newest to oldest by default, unless param `order: asc` is used. */}}
+{{- if ne (.Param "order") "asc" }}
+  {{- $pages = $pages.Reverse }}
+{{- end }}
+
+{{- $res = $pages }}
 
 {{- end }}{{/* End context */ -}}
 
