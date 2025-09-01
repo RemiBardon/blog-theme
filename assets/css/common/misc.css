@@ -1,0 +1,9 @@
+/* FIX: Just a workaround for places where a list of pages contains only empty
+     sections. Happens mainly when a pinned section contains only drafts. */
+/* NOTE: Doesn’t fix the issue if the section itself has an empty section. */
+/* NOTE: Not a problem when CSS is disabled since lists use margins by default
+     in most browsers. Margins can collapse if the element has no height. */
+ul:not(:has(li)),
+ol:not(:has(li)) {
+  display: none !important;
+}
