@@ -4,11 +4,11 @@
     {{- partial "cover.html" (dict "cxt" . "IsHome" true "isHidden" $isHidden) }}
     <header class="entry-header">
       <h2>
-        <span class="title">
+        <a class="entry-link title" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}">
           {{- .Title | markdownify -}}
           {{- if $.isForeign }}<sup class="entry-sup">&nbsp;&nbsp;{{ .Language.LanguageName }}</sup>{{ end -}}
           {{- if .Draft }}<sup class="entry-sup">&nbsp;&nbsp;[draft]</sup>{{ end -}}
-        </span>
+        </a>
         {{- partial "privacy-level-icon.html" . }}
       </h2>
     </header>
@@ -23,6 +23,5 @@
       {{- partialCached "post-tags.html" . . }}
     </footer>
     {{- end }}
-    <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
   </article>
 {{- end }}{{/* End context */ -}}

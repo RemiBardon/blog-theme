@@ -144,7 +144,9 @@
   font-size: 13px;
 }
 
-.entry-link {
+.entry-link::after {
+  display: block;
+  content: "";
   position: absolute;
   left: 0;
   right: 0;

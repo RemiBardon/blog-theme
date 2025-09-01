@@ -3,7 +3,7 @@
   <li class="category-card" {{ (partialCached `category-card-style.html` . .) | safeHTMLAttr }}>
     <img class="category-icon" src="{{ partialCached `category-icon-link.html` . . }}"/>
     <div>
-      <span class="title">{{ .Page.Title | markdownify }}</span>
+      <a href="{{ default .Page.Permalink .Page.Params.Permalink }}" class="entry-link title">{{ .Page.Title | markdownify }}</a>
       <div class="subtitle">
         {{- if .Page.Params.httpRefresh }}
         {{ default "External" .Page.Params.externalReason }}
@@ -12,7 +12,6 @@
         {{- end }}
       </div>
     </div>
-    <a href="{{ default .Page.Permalink .Page.Params.Permalink }}" class="entry-link"></a>
   </li>
   {{- end }}
 </ul>
