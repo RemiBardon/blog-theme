@@ -44,18 +44,20 @@
 {{- end }}
 
 {{- if .IsPage }}
-  {{- /* Reading time */}}
-  {{- if (.Param "ShowReadingTime") }}
-    {{- $text := partial "util/i18n.txt" (dict "key" "read_time" "value" .ReadingTime) }}
-    {{- $value := (printf "PT%dM" .ReadingTime) }}
-    {{- $scratch.Add "meta" (slice (printf "<li><time itemprop=\"timeRequired\" datetime=\"%s\">%s</time></li>" $value $text)) }}
-  {{- end }}
+  {{- if gt .WordCount 20 }}
+    {{- /* Reading time */}}
+    {{- if (.Param "ShowReadingTime") }}
+      {{- $text := partial "util/i18n.txt" (dict "key" "read_time" "value" .ReadingTime) }}
+      {{- $value := (printf "PT%dM" .ReadingTime) }}
+      {{- $scratch.Add "meta" (slice (printf "<li><time itemprop=\"timeRequired\" datetime=\"%s\">%s</time></li>" $value $text)) }}
+    {{- end }}
 
-  {{- /* Word count */}}
-  {{- if (not hugo.IsProduction) | or (.Param "ShowWordCount") }}
-    {{- $text := partial "util/i18n.txt" (dict "key" "words" "value" .WordCount) }}
-    {{- $value := .WordCount }}
-    {{- $scratch.Add "meta" (slice (printf "<li><span itemprop=\"wordCount\" content=\"%d\">%s</span></li>" $value $text)) }}
+    {{- /* Word count */}}
+    {{- if (not hugo.IsProduction) | or (.Param "ShowWordCount") }}
+      {{- $text := partial "util/i18n.txt" (dict "key" "words" "value" .WordCount) }}
+      {{- $value := .WordCount }}
+      {{- $scratch.Add "meta" (slice (printf "<li><span itemprop=\"wordCount\" content=\"%d\">%s</span></li>" $value $text)) }}
+    {{- end }}
   {{- end }}
 {{- else }}
   {{- /* Pages count */}}
