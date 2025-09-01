@@ -11,12 +11,30 @@
 {{ partial "post-content.html" (dict "ctx" .) }}
 
 {{- if not ($.Param "hideChildPages" | default false) }}
-  {{- $paginator := .Paginate (partialCached "pages" . .) }}
+  {{- $pages := partialCached "pages" . . }}
+
+  {{- $onTop := where $pages "Params.keepOnTop" true }}
+  {{- with $onTop }}
   <ol class="page-list">
-    {{- range $paginator.Pages -}}
-      {{- partial "page-list-entry.html" . -}}
-    {{- end -}}
+    {{- range . }}
+      {{- partial "page-list-entry.html" . }}
+    {{- end }}
   </ol>
+  {{- end }}
+
+  {{- $rest := where $pages "Params.keepOnTop" "ne" true }}
+  {{- /* NOTE: Use `site.Home.Paginator` because `.Paginator` would trigger
+           [the pagination cache](https://gohugo.io/templates/pagination/#caching),
+           breaking the filter on `$rest` as a side effect. */}}
+  {{- $pagerSize := .Params.pagination.pagerSize | default site.Home.Paginator.PagerSize }}
+  {{- $paginator := .Paginate $rest $pagerSize }}
+  {{- with $paginator.Pages }}
+  <ol class="page-list">
+    {{- range . }}
+      {{- partial "page-list-entry.html" . }}
+    {{- end }}
+  </ol>
+  {{- end }}
 
   {{- if gt $paginator.TotalPages 1 }}
   <footer class="page-footer">
