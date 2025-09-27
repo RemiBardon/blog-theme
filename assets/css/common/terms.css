@@ -42,3 +42,31 @@
 body.list .terms .term {
     background: var(--entry);
 }
+
+/* See [Border with gradient and radius - DEV Community](https://dev.to/afif/border-with-gradient-and-radius-387f) */
+.terms .term.pride {
+    --pride-gradient: linear-gradient(
+        160deg,
+        #e40303,
+        #ff8c00,
+        #ffed00,
+        #008026,
+        #004dff,
+        #750787
+    );
+    border: none;
+    position: relative;
+    padding: calc(0.25em + 1px) calc(0.75em + 1px);
+}
+.terms .term.pride::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    padding: 1.5px;
+    background: var(--pride-gradient);
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+}

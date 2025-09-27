@@ -2,7 +2,7 @@
 <ul class="terms">
   {{- range . }}
   <li>
-    <a href="{{ .Permalink }}" class="term">
+    <a href="{{ .Permalink }}" class="term{{ with .Page.Params.class }} {{ . }}{{ end }}">
       <span class="link-title">{{ .LinkTitle | markdownify }}</span>
     </a>
   </li>

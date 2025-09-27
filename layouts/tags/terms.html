@@ -14,7 +14,7 @@
     {{- $count := .Count }}
     {{- with site.GetPage (printf "/%s/%s" $type .Name) }}
   <li>
-    <a href="{{ .Permalink }}" class="term">
+    <a href="{{ .Permalink }}" class="term{{ with .Page.Params.class }} {{ . }}{{ end }}">
       <span class="link-title">{{ .LinkTitle | markdownify }}</span>
       {{- "&nbsp;" | safeHTML }}<sup class="page-count">{{ $count }}</sup>
     </a>
