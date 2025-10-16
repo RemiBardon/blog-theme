@@ -29,7 +29,7 @@
 {{- end }}
 
 {{- with $meta }}
-  {{- $parts = $parts | append (printf `<div class="meta">%s</div>` (delimit . ", " )) }}
+  {{- $parts = $parts | append (printf `<div class="meta">%s</div>` (delimit . ", ")) }}
 {{- end }}
 
 {{- with $parts }}
