@@ -287,7 +287,7 @@
   border-radius: 4px;
   min-height: 200px;
   min-width: 200px;
-  max-height: min(20em, 100vh);
+  max-height: 70vh;
   object-fit: contain;
 }
 
