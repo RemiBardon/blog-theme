@@ -22,7 +22,7 @@
   {{- end }}
 {{- else }}
   {{- with .Get 1 }}
-    {{ $fold = . }}
+    {{ $fold = cond (len . | eq 1) . "" }}
   {{- end }}
 {{- end }}
 
@@ -34,7 +34,7 @@
     {{- $summary = (partialCached "callout-default-summary.txt" $type $type site.Language.LanguageCode) }}
   {{- end }}
 {{- else }}
-  {{- with .Get 2 }}
+  {{- with cond $fold (.Get 2) (.Get 1) }}
     {{ $summary = . }}
   {{- else }}
     {{- $summary = (partialCached "callout-default-summary.txt" $type $type site.Language.LanguageCode) }}
