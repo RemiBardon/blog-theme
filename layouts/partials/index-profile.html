@@ -27,7 +27,7 @@
     {{- end }}
     <div>
         <h1>{{ .title | default site.Title | markdownify }}</h1>
-        <span>{{ .subtitle | markdownify }}</span>
+        <span style="display:inline-block;text-wrap:balance;">{{ .subtitle | markdownify }}</span>
     </div>
     {{- partial "social-icons.html" site.Params.socialIcons -}}
 
