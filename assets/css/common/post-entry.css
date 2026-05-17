@@ -14,6 +14,10 @@
   gap: calc(var(--gap) / 4);
 }
 
+.page-list-entry .entry-link:visited {
+  color: var(--secondary);
+}
+
 .page-list-entry:active {
   transform: scale(0.96);
 }
