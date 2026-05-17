@@ -2,6 +2,9 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    /* NOTE: Fixes bug where some lines are far bigger than others on Safari
+         iOS. For example, in code blocks and post metadata. */
+    -webkit-text-size-adjust: 100%;
 }
 
 .main {
