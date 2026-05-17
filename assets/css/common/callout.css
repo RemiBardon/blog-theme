@@ -42,6 +42,8 @@ body {
   overflow: hidden;
   background-color: rgba(var(--callout-color-rgb), 0.1);
   border-radius: 0.25rem;
+  /* NOTE: So we can use `cqw` units inside. */
+  container-type: inline-size;
 }
 
 .callout p {
