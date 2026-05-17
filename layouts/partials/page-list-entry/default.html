@@ -4,7 +4,7 @@
     {{- partial "cover.html" (dict "cxt" . "IsHome" true "isHidden" $isHidden) }}
     <header class="entry-header">
       <h2>
-        <a class="entry-link title" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}">
+        <a class="entry-link title" aria-label="Link to post “{{ .Title | plainify }}”" href="{{ .Permalink }}">
           {{- .Title | markdownify -}}
           {{- if $.isForeign }}<sup class="entry-sup">&nbsp;&nbsp;{{ .Language.LanguageName }}</sup>{{ end -}}
           {{- if .Draft }}<sup class="entry-sup">&nbsp;&nbsp;[draft]</sup>{{ end -}}
