@@ -7,7 +7,7 @@
         <a class="entry-link title" aria-label="Link to post “{{ .Title | plainify }}”" href="{{ .Permalink }}">
           {{- .Title | markdownify -}}
         </a>
-        {{- if $.isForeign }}<sup class="entry-sup">&nbsp;&nbsp;{{ .Language.LanguageName }}</sup>{{ end -}}
+        {{- if $.isForeign }}<sup class="entry-sup">&nbsp;&nbsp;{{ .Language.Label }}</sup>{{ end -}}
         {{- if .Draft }}<sup class="entry-sup">&nbsp;&nbsp;[draft]</sup>{{ end -}}
         {{- partial "privacy-level-icon.html" . }}
       </h2>

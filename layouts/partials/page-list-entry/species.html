@@ -8,7 +8,7 @@
         <h2>
           <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}">
             {{- .Title | markdownify }}
-            {{- if $.isForeign }}<sup class="entry-sup">&nbsp;&nbsp;{{ .Language.LanguageName }}</sup>{{ end }}
+            {{- if $.isForeign }}<sup class="entry-sup">&nbsp;&nbsp;{{ .Language.Label }}</sup>{{ end }}
             {{- if .Draft }}<sup class="entry-sup">&nbsp;&nbsp;[draft]</sup>{{- end }}
           </a>
         </h2>

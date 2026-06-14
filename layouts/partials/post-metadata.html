@@ -82,7 +82,7 @@
 
 {{- /* Language */}}
 {{- if eq $.showLang true }}
-  {{- $text := .Language.LanguageName }}
+  {{- $text := .Language.Label }}
   {{- $scratch.Add "meta" (slice (printf "<li>%s</li>" $text)) }}
 {{- end }}
 

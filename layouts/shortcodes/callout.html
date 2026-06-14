@@ -31,13 +31,13 @@
   {{- with .Get "title" }}
     {{ $summary = . }}
   {{- else }}
-    {{- $summary = (partialCached "callout-default-summary.txt" $type $type site.Language.LanguageCode) }}
+    {{- $summary = (partialCached "callout-default-summary.txt" $type $type site.Language.Locale) }}
   {{- end }}
 {{- else }}
   {{- with cond $fold (.Get 2) (.Get 1) }}
     {{ $summary = . }}
   {{- else }}
-    {{- $summary = (partialCached "callout-default-summary.txt" $type $type site.Language.LanguageCode) }}
+    {{- $summary = (partialCached "callout-default-summary.txt" $type $type site.Language.Locale) }}
   {{- end }}
 {{- end }}
 
